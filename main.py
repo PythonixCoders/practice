@@ -27,6 +27,7 @@ class Game:
         pass
 
     def logic(self, delta):
+        self.p.hdg += randint(-15, 15)
         self.p.update(delta)
 
     def render(self, window):
