@@ -1,32 +1,45 @@
-import pygame
 import sys
-pygame.init()
+from random import randint
+import pygame
+from car import Car
 
 
 class Game:
+    """
+    Game class
+
+    Arguments:
+        size {tuple} -- window size
+    """
+
     def __init__(self, size):
         self.width = size[0]
         self.height = size[1]
         self.win = pygame.display.set_mode(size)
         pygame.display.set_caption("Racing Game")
-        self.background = (0, 0, 0)
+        self.background = (255, 255, 255)
+
+        self.p = Car((self.width / 2, self.height / 2))
+        self.p.speed = 2
+        self.p.hdg = randint(0, 360)
 
     def input(self, keys):
         pass
 
     def logic(self, delta):
-        print(delta)
+        self.p.update(delta)
 
     def render(self, window):
         window.fill(self.background)
 
-        pygame.draw.rect(window, (255, 255, 255), (100, 100, 50, 50))
+        self.p.render(window)
 
         pygame.display.update()
 
 
 def main():
-    g = Game((800, 600))
+    pygame.init()
+    g = Game((1024, 720))
     clock = pygame.time.Clock()
     fps = 60
 
