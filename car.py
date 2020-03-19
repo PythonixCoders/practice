@@ -25,9 +25,17 @@ class Car:
         self.hdg = 0
         self.rect = self.img.get_rect()
 
+        self.accelerating = False
+
+    def apply_friction(self, friction):
+        self.speed *= friction
+        self.x_vel *= friction
+        self.y_vel *= friction
+
     def update(self, delta):
-        self.x_vel += cos(radians(self.hdg)) * self.speed
-        self.y_vel += sin(radians(self.hdg)) * self.speed
+        if self.accelerating:
+            self.x_vel += cos(radians(self.hdg)) * self.speed
+            self.y_vel += sin(radians(self.hdg)) * self.speed
 
         self.x += self.x_vel * delta
         self.y += self.y_vel * delta
@@ -39,3 +47,4 @@ class Car:
         )
         size = transformed.get_size()
         window.blit(transformed, (self.x - size[0] / 2, self.y - size[1] / 2))
+        self.rect = transformed.get_rect()
